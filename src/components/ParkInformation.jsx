@@ -1,28 +1,29 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
-import Trails from './Trails'
-import Alert from './Alert'
-import Location from './MapLocation'
-// import {Link} from 'react-router-dom'
-import Weather from './Weather'
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import Trails from './Trails';
+import Alert from './Alert';
+import Location from './MapLocation';
+import Weather from './Weather';
 
-function ParkInformation({selectedParkName}) {
-  // const { parkId } = useParams();
+function ParkInformation({ selectedParkName }) {
   const location = useLocation();
-  const { latitude, longitude } = location.state;
+  const queryParams = new URLSearchParams(location.search);
+  
+  const parkName = queryParams.get('parkName') || selectedParkName; 
+  const latitude = queryParams.get('latitude');
+  const longitude = queryParams.get('longitude');
 
+  console.log("Received state:", { parkName, latitude, longitude });
 
   return (
     <div>
-        <h1>{selectedParkName || 'Park Name'}</h1>
-        <Trails selectedParkName={selectedParkName}/>
-        <Alert selectedParkName={selectedParkName}/>
-        <Location selectedParkName={selectedParkName}/>
-        <Weather latitude={latitude} longitude={longitude}/>
+      <h1>{parkName || 'Park Name'}</h1>
+      <Trails selectedParkName={parkName} />
+      <Alert selectedParkName={parkName} />
+      <Location selectedParkName={parkName} />
+      <Weather selectedParkName={parkName} latitude={latitude} longitude={longitude} />
     </div>
-
-  )
+  );
 }
 
-export default ParkInformation
+export default ParkInformation;
