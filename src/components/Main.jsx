@@ -15,7 +15,7 @@ function Main({ setSelectedParkName }) {
       .catch(error => console.error("Cannot fetch parks: ", error));
       console.log("parks fetched",parks)
   }, []);
-  
+  console.log(parks)
 
   useEffect(() => {
     const results = parks.filter(park =>
